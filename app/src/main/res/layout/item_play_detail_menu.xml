@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/dp_10"
+              android:clipToPadding="false"
+              android:clipChildren="false"
+              android:layout_gravity="center_horizontal|bottom"
+              android:layout_marginBottom="@dimen/dp_82">
+
+    <!--layout_gravity属性和margin属性对Canvas绘制位置有影响，建议：放到父view操作这些-->
+    <cn.app.cliplinearlayout.widget.ClipLinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/clipLayout"
+        android:clipChildren="false"
+        android:layout_width="@dimen/dp_222"
+        android:layout_height="@dimen/dp_46"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv30s"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_margin="@dimen/dp_8"
+            android:src="@mipmap/icon_play_30s_def"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:id="@+id/iv60s"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/icon_play_60s_def"
+            android:layout_margin="@dimen/dp_8"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:id="@+id/iv3m"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/icon_play_3m_def"
+            android:layout_margin="@dimen/dp_8"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:id="@+id/iv5m"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/icon_play_5m_def"
+            android:layout_margin="@dimen/dp_8"
+            tools:ignore="ContentDescription"/>
+    </cn.app.cliplinearlayout.widget.ClipLinearLayout>
+</LinearLayout>
