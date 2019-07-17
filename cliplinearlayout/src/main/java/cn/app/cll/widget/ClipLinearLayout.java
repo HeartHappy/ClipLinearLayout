@@ -1,4 +1,4 @@
-package cn.app.cliplinearlayout.widget;
+package cn.app.cll.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,8 +15,9 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
-import cn.app.cliplinearlayout.R;
-import cn.app.cliplinearlayout.utils.PaintUtil;
+
+import cn.app.cll.R;
+import cn.app.cll.interfaces.OnViewDrawListener;
 
 
 /**
@@ -34,13 +35,21 @@ public class ClipLinearLayout extends LinearLayout {
     private RectF mParentRect;//父控件Rect
     private float mX;//圆心x，根据子View位置计算X坐标
     private float mY;//圆心y，同上
+    private Paint mPaint;
     private SparseArray<RectF> mSparseArray = new SparseArray<>();
 
 
     //可操作属性
     private int mClipBackgroundColor = Color.WHITE;
     private float mRadius;//圆的半径
+    private float mClipBorder = 45;//裁剪边缘距离（view的边缘到裁剪区域边缘之间的距离）
+    private OnViewDrawListener mOnViewDrawListener;
+    private boolean isFirstDraw;
 
+
+    public void setOnViewDrawListener(OnViewDrawListener onViewDrawListener) {
+        mOnViewDrawListener = onViewDrawListener;
+    }
 
     @Override
     public void setBackgroundColor(int backgroundColor) {
@@ -69,9 +78,15 @@ public class ClipLinearLayout extends LinearLayout {
     public ClipLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mParentRect = new RectF();
+        initPaint();
         initAttrs(context, attrs);
+    }
 
-
+    private void initPaint() {
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(mClipBackgroundColor);
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
@@ -149,11 +164,15 @@ public class ClipLinearLayout extends LinearLayout {
         Path circlePath = new Path();
         circlePath.addCircle(mX, mY, mRadius, Path.Direction.CW);
         Path roundRectPath = new Path();
-        roundRectPath.addRoundRect(new RectF(0, 0, mWidth, mHeight), (float) mWidth / 2, (float) mWidth / 2, Path.Direction.CCW);
+        roundRectPath.addRoundRect(new RectF(getPaddingLeft(), getPaddingTop(), mWidth - getPaddingRight(), mHeight - getPaddingBottom()), (float) mWidth / 2, (float) mWidth / 2, Path.Direction.CCW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             roundRectPath.op(circlePath, Path.Op.DIFFERENCE);
         }
-        canvas.drawPath(roundRectPath, PaintUtil.getInstance().getPaint(0, mClipBackgroundColor, Paint.Style.FILL_AND_STROKE));
+        canvas.drawPath(roundRectPath, mPaint);
+        if (mOnViewDrawListener != null && !isFirstDraw) {
+            mOnViewDrawListener.onViewDrawEndListener(canvas, mX, mY, mRadius);
+            isFirstDraw = true;
+        }
     }
 
 
@@ -174,17 +193,40 @@ public class ClipLinearLayout extends LinearLayout {
         });
     }
 
+    /**
+     * 设置裁剪位置根据子ChildView的id
+     *
+     * @param view childView  必须设置id属性
+     */
+    public void setClipCirCle(View view) {
+        clipRadius(view, mClipBorder);
+    }
 
     /**
      * 设置裁剪位置根据子ChildView的id
      *
-     * @param id     childView的id 必须设置id属性
-     * @param radius 裁剪圆的半径
+     * @param view   childView  必须设置id属性
+     * @param radius 裁剪View的边缘到裁剪区域之间的距离 (单位像素px)
      */
-    public void setDropCirCleByViewId(int id, int radius) {
-        if (mSparseArray.get(id) != null) {
-            RectF rectF = mSparseArray.get(id);
-            this.setCirCleCoordinate((rectF.right - rectF.left) / 2 + rectF.left, (rectF.bottom - rectF.top) / 2 + rectF.top, radius);
+    public void setClipCirCle(View view, int radius) {
+        clipRadius(view, radius);
+    }
+
+
+    /**
+     * 裁剪半径
+     *
+     * @param view   裁剪的View
+     * @param radius 裁剪的半径（一般为view的宽度/2+像素才看得到裁剪效果），默认是45
+     */
+    private void clipRadius(View view, float radius) {
+        if (mSparseArray.get(view.getId()) != null) {
+            RectF rectF = mSparseArray.get(view.getId());
+            if (rectF == null) {
+                throw new RuntimeException("please set view id");
+            }
+
+            this.setCirCleCoordinate((rectF.right - rectF.left) / 2 + rectF.left, (rectF.bottom - rectF.top) / 2 + rectF.top, view.getWidth() / 2 + radius);
         }
     }
 }

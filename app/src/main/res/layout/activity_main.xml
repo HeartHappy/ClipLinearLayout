@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/ic_launcher_background"
+              android:clipChildren="false"
+              android:gravity="center"
+    >
 
-    android:background="@color/color_333333">
+    <!--layout_gravity属性和margin属性对Canvas绘制位置有影响，建议：放到父view操作这些-->
+    <cn.app.cll.widget.ClipLinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/clipLayout"
+        android:layout_width="@dimen/dp_222"
+        android:layout_height="@dimen/dp_46"
+        android:clipChildren="false"
+        android:gravity="center">
 
-    <include layout="@layout/item_play_detail_menu"/>
-</FrameLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivThirtySecond"
+            style="@style/style_clip_circle"
+            android:src="@mipmap/icon_play_30s_def"
+            tools:ignore="ContentDescription"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivSixtySeconds"
+            style="@style/style_clip_circle"
+            android:src="@mipmap/icon_play_60s_def"
+            tools:ignore="ContentDescription"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivTrisection"
+            style="@style/style_clip_circle"
+            android:src="@mipmap/icon_play_3m_def"
+            tools:ignore="ContentDescription"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivFifth"
+            style="@style/style_clip_circle"
+            android:src="@mipmap/icon_play_5m_def"
+            tools:ignore="ContentDescription"/>
+    </cn.app.cll.widget.ClipLinearLayout>
+</LinearLayout>

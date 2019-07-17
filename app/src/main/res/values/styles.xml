@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="style_clip_circle">
+        <item name="android:layout_width">@dimen/dp_30</item>
+        <item name="android:layout_height">@dimen/dp_30</item>
+        <item name="android:layout_margin">@dimen/dp_8</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
 </resources>
