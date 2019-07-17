@@ -82,8 +82,8 @@ public class ClipLinearLayout extends LinearLayout {
     public ClipLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mParentRect = new RectF();
-        initPaint();
         initAttrs(context, attrs);
+        initPaint();
     }
 
     private void initPaint() {
@@ -98,7 +98,7 @@ public class ClipLinearLayout extends LinearLayout {
     private void initAttrs(Context context, AttributeSet attrs) {
         @SuppressLint("CustomViewStyleable") TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.clip_layout);
         if (typedArray != null) {
-            Drawable drawable = typedArray.getDrawable(R.styleable.clip_layout_clip_background);
+            Drawable drawable = typedArray.getDrawable(R.styleable.clip_layout_round_background);
             if (drawable != null) {
                 if (drawable instanceof ColorDrawable) {
                     mClipBackgroundColor = ((ColorDrawable) drawable).getColor();
