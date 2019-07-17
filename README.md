@@ -26,12 +26,12 @@ clipLayout.clipCirCle(v);//裁剪的子view（注：这里具体裁剪的是Clip
 clipLayout.clipCirCle(v,45);//裁剪的子view，子view边缘到裁剪边缘的距离--像素px
 
 //默认裁剪，View绘制完成监听，否则设置默认选中无效
-        mClipLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                selectClipView(mIvThirtySecond);
-            }
-        });
+mClipLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    @Override
+    public void onGlobalLayout() {
+        selectClipView(mIvThirtySecond);
+    }
+});
 
 //设置父布局圆角矩形背景色	
 setBackgroundColor（）
