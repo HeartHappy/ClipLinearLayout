@@ -11,3 +11,4 @@ clipLayout.setDropCirCleByViewId(v.getId(), v.getWidth() / 2 + 45);
 
 //方法参数说明
 setDropCirCleByViewId（裁剪子View的id，裁剪子View的半径（一般为View的宽/2加上你想看到空缺的大小））
+

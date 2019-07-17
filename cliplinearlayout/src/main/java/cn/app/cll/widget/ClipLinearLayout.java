@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import cn.app.cll.R;
-import cn.app.cll.interfaces.OnViewDrawListener;
 
 
 /**
@@ -35,29 +34,34 @@ public class ClipLinearLayout extends LinearLayout {
     private RectF mParentRect;//父控件Rect
     private float mX;//圆心x，根据子View位置计算X坐标
     private float mY;//圆心y，同上
-    private Paint mPaint;
+    private Paint mPaint;//画笔
+    private float mRadius;//圆的半径
     private SparseArray<RectF> mSparseArray = new SparseArray<>();
-
 
     //可操作属性
     private int mClipBackgroundColor = Color.WHITE;
-    private float mRadius;//圆的半径
-    private float mClipBorder = 45;//裁剪边缘距离（view的边缘到裁剪区域边缘之间的距离）
-    private OnViewDrawListener mOnViewDrawListener;
-    private boolean isFirstDraw;
 
 
-    public void setOnViewDrawListener(OnViewDrawListener onViewDrawListener) {
-        mOnViewDrawListener = onViewDrawListener;
-    }
-
+    /**
+     * 重绘背景色
+     *
+     * @param backgroundColor 背景色
+     */
     @Override
     public void setBackgroundColor(int backgroundColor) {
         this.mClipBackgroundColor = backgroundColor;
+        initPaint();
         invalidate();
     }
 
 
+    /**
+     * 确定点进行重绘
+     *
+     * @param x      x
+     * @param y      y
+     * @param radius 实际半径
+     */
     private void setCirCleCoordinate(float x, float y, float radius) {
         mX = x;
         mY = y;
@@ -83,7 +87,9 @@ public class ClipLinearLayout extends LinearLayout {
     }
 
     private void initPaint() {
-        mPaint = new Paint();
+        if (mPaint == null) {
+            mPaint = new Paint();
+        }
         mPaint.setAntiAlias(true);
         mPaint.setColor(mClipBackgroundColor);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -169,10 +175,6 @@ public class ClipLinearLayout extends LinearLayout {
             roundRectPath.op(circlePath, Path.Op.DIFFERENCE);
         }
         canvas.drawPath(roundRectPath, mPaint);
-        if (mOnViewDrawListener != null && !isFirstDraw) {
-            mOnViewDrawListener.onViewDrawEndListener(canvas, mX, mY, mRadius);
-            isFirstDraw = true;
-        }
     }
 
 
@@ -198,8 +200,10 @@ public class ClipLinearLayout extends LinearLayout {
      *
      * @param view childView  必须设置id属性
      */
-    public void setClipCirCle(View view) {
-        clipRadius(view, mClipBorder);
+    public void clipCirCle(View view) {
+        //裁剪边缘距离（view的边缘到裁剪区域边缘之间的距离）
+        float clipBorder = 45;
+        clipRadius(view, clipBorder);
     }
 
     /**
@@ -208,7 +212,7 @@ public class ClipLinearLayout extends LinearLayout {
      * @param view   childView  必须设置id属性
      * @param radius 裁剪View的边缘到裁剪区域之间的距离 (单位像素px)
      */
-    public void setClipCirCle(View view, int radius) {
+    public void clipCirCle(View view, int radius) {
         clipRadius(view, radius);
     }
 
@@ -223,9 +227,8 @@ public class ClipLinearLayout extends LinearLayout {
         if (mSparseArray.get(view.getId()) != null) {
             RectF rectF = mSparseArray.get(view.getId());
             if (rectF == null) {
-                throw new RuntimeException("please set view id");
+                throw new RuntimeException("Please set the view id");
             }
-
             this.setCirCleCoordinate((rectF.right - rectF.left) / 2 + rectF.left, (rectF.bottom - rectF.top) / 2 + rectF.top, view.getWidth() / 2 + radius);
         }
     }

@@ -2,10 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@drawable/ic_launcher_background"
               android:clipChildren="false"
-              android:gravity="center"
-    >
+              android:clipToPadding="false"
+              android:paddingBottom="@dimen/dp_100"
+              android:gravity="center|bottom">
+
+
 
     <!--layout_gravity属性和margin属性对Canvas绘制位置有影响，建议：放到父view操作这些-->
     <cn.app.cll.widget.ClipLinearLayout
@@ -20,25 +24,25 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivThirtySecond"
             style="@style/style_clip_circle"
-            android:src="@mipmap/icon_play_30s_def"
+            android:background="@drawable/sel_thirty_second"
             tools:ignore="ContentDescription"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivSixtySeconds"
             style="@style/style_clip_circle"
-            android:src="@mipmap/icon_play_60s_def"
+            android:background="@drawable/sel_sixty_seconds"
             tools:ignore="ContentDescription"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivTrisection"
             style="@style/style_clip_circle"
-            android:src="@mipmap/icon_play_3m_def"
+            android:background="@drawable/sel_trisection"
             tools:ignore="ContentDescription"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivFifth"
             style="@style/style_clip_circle"
-            android:src="@mipmap/icon_play_5m_def"
+            android:background="@drawable/sel_fifth"
             tools:ignore="ContentDescription"/>
     </cn.app.cll.widget.ClipLinearLayout>
 </LinearLayout>
