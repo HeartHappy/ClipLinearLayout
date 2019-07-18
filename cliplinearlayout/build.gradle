@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.novoda.bintray-release'//添加
 android {
     compileSdkVersion 28
-
-
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -22,6 +20,7 @@ android {
         }
     }
 
+
 }
 
 dependencies {
@@ -30,3 +29,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+//添加
+publish {
+    userOrg = 'hearthappy'//bintray.com用户名
+    groupId = 'com.hearthappy'//jcenter上的路径
+    artifactId = 'cliplinearlayout'//项目名称
+    publishVersion = '1.0.0'//版本号
+    desc = 'This is my share to meven first project'//描述，不重要
+    website = 'https://github.com/HeartHappy/ClipLinearLayout'//网站，最好有，不重要
+}
+

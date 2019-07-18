@@ -18,7 +18,7 @@
         android:id="@+id/clipLayout"
         android:layout_width="@dimen/dp_222"
         android:layout_height="@dimen/dp_46"
-        app:round_background="@color/color_333333"
+        app:round_background="@color/color_white"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:gravity="center">
