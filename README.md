@@ -8,7 +8,9 @@
 
 (说明项目的配置方法，android开源库多用Gradle导入)
 ### 配置
+```java
 compile 'com.hearthappy:cliplinearlayout:1.0.0'
+```
 
 ### 使用方法
 | 属性名称 | 值/类型 | 简介 |
