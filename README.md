@@ -8,7 +8,7 @@
 
 (说明项目的配置方法，android开源库多用Gradle导入)
 ### 配置
-
+compile 'com.hearthappy:cliplinearlayout:1.0.0'
 
 ### 使用方法
 | 属性名称 | 值/类型 | 简介 |
@@ -29,7 +29,7 @@ clipLayout.clipCirCle(v,45);//裁剪的子view，子view边缘到裁剪边缘的
 clipLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
     @Override
     public void onGlobalLayout() {
-        selectClipView(childView);
+        clipLayout.clipCirCle(childView);
     }
 });
 
