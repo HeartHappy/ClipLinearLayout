@@ -1,12 +1,10 @@
 package cn.app.cliplinearlayout;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import cn.app.cll.builder.ClipLayoutAttrs;
 import cn.app.cll.interfaces.OnClickClipListener;
 import cn.app.cll.widget.ClipLinearLayout;
 

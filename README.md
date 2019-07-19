@@ -16,14 +16,14 @@ compile 'com.hearthappy:cliplinearlayout:1.0.1'
 
 ### xml自定义属性
 
-| 属性名称 | 值/类型 | 默认值 |
-| :------: | :------: | :------: |
-|clip_round_background:圆角矩形背景色 | color | 默认白色 |
-|clip_support_anim:是否支持放大动画 | boolean | 默认白色 |
-|clip_sel_scaleX:X轴放大 | float | 默认1.0f（原始大小） |
-|clip_sel_scale:Y轴放大 | float | 默认1.0f（原始大小） |
-|clip_anim_duration:放大时长 | integer | 默认100 |
-|clip_size:裁剪大小 | float | 默认10px |
+| 属性名称 |作用说明| 值/类型 | 默认值 |
+| :------: | :------: | :------: | :--:|
+|clip_round_background|圆角矩形背景色 | color | 默认白色 |
+|clip_support_anim|是否支持放大动画 | boolean | 默认白色 |
+|clip_sel_scaleX|X轴放大 | float | 默认1.0f（原始大小） |
+|clip_sel_scaleY|Y轴放大 | float | 默认1.0f（原始大小） |
+|clip_anim_duration|放大时长 | integer | 默认100 |
+|clip_size|裁剪大小(单位像素) | float | 默认10px |
 
 ### java代码使用方式
 
