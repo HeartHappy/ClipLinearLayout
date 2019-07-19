@@ -3,6 +3,7 @@
 
 ### 示例:  
 <img width="300"  src="https://github.com/HeartHappy/ClipLinearLayout/blob/master/cliplinearlayout/gifhome_1088x1920_5s.gif"/>
+
 ### 特性
 主要用来操作切换按钮时使用，选中的View周边裁剪后透露出底色，看到背景，给人视觉上一种新的感观
 
