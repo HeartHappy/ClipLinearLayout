@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="clip_layout">
-        <attr name="round_background" format="reference"/>
+    <declare-styleable name="ClipLinearLayout">
+        <attr name="clip_round_background" format="color"/>
+        <attr name="clip_support_anim" format="boolean"/>
+        <attr name="clip_sel_scaleX" format="float"/>
+        <attr name="clip_sel_scaleY" format="float"/>
+        <attr name="clip_anim_duration" format="integer"/>
+        <attr name="clip_size" format="float"/>
     </declare-styleable>
 </resources>

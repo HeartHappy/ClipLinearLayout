@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import cn.app.cll.R;
+import cn.app.cll.builder.ClipLayoutAttrs;
+import cn.app.cll.interfaces.OnClickClipListener;
 
 
 /**
@@ -37,38 +39,32 @@ public class ClipLinearLayout extends LinearLayout {
     private Paint mPaint;//画笔
     private float mRadius;//圆的半径
     private SparseArray<RectF> mSparseArray = new SparseArray<>();
+    private View mPreView;//上一个选中View
+    private OnClickClipListener mOnClickClipListener;
+
 
     //可操作属性
-    private int mClipBackgroundColor = Color.WHITE;
+    private int mRoundBackgroundColor = Color.WHITE;
+    private boolean mSupportAnim;//是否支持动画
+    private float mScaleX;//缩放X
+    private float mScaleY;//缩放Y
+    private long mDuration;//动画时长
+    private float mClipSize;//裁剪大小，单位像素px
 
 
-    /**
-     * 重绘背景色
-     *
-     * @param backgroundColor 背景色
-     */
-    @Override
-    public void setBackgroundColor(int backgroundColor) {
-        this.mClipBackgroundColor = backgroundColor;
-        initPaint();
-        invalidate();
+    public void setOnClickClipListener(OnClickClipListener onClickClipListener) {
+        mOnClickClipListener = onClickClipListener;
     }
 
 
-    /**
-     * 确定点进行重绘
-     *
-     * @param x      x
-     * @param y      y
-     * @param radius 实际半径
-     */
-    private void setCirCleCoordinate(float x, float y, float radius) {
-        mX = x;
-        mY = y;
-        mRadius = radius;
-        invalidate();
+    public void builder(ClipLayoutAttrs attrs) {
+        mSupportAnim = attrs.isSupportAnim();
+        mRoundBackgroundColor = attrs.getRoundBackgroundColor();
+        mScaleX = attrs.getScaleX();
+        mScaleY = attrs.getScaleY();
+        mDuration = attrs.getDuration();
+        mClipSize = attrs.getClipSize();
     }
-
 
     public ClipLinearLayout(Context context) {
         this(context, null);
@@ -81,6 +77,8 @@ public class ClipLinearLayout extends LinearLayout {
     @SuppressLint("ResourceType")
     public ClipLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setClipChildren(false);
+        setClipToPadding(false);
         mParentRect = new RectF();
         initAttrs(context, attrs);
         initPaint();
@@ -91,21 +89,25 @@ public class ClipLinearLayout extends LinearLayout {
             mPaint = new Paint();
         }
         mPaint.setAntiAlias(true);
-        mPaint.setColor(mClipBackgroundColor);
+        mPaint.setColor(mRoundBackgroundColor);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
     }
 
+    /**
+     * 从xml中获取属性值
+     *
+     * @param context 上下文
+     * @param attrs   属性对象
+     */
     private void initAttrs(Context context, AttributeSet attrs) {
-        @SuppressLint("CustomViewStyleable") TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.clip_layout);
+        @SuppressLint("CustomViewStyleable") TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ClipLinearLayout);
         if (typedArray != null) {
-            Drawable drawable = typedArray.getDrawable(R.styleable.clip_layout_round_background);
-            if (drawable != null) {
-                if (drawable instanceof ColorDrawable) {
-                    mClipBackgroundColor = ((ColorDrawable) drawable).getColor();
-                } else {
-                    throw new RuntimeException("Please set color value,Temporarily does not support the Drawable");
-                }
-            }
+            mRoundBackgroundColor = typedArray.getColor(R.styleable.ClipLinearLayout_clip_round_background, Color.WHITE);
+            mSupportAnim = typedArray.getBoolean(R.styleable.ClipLinearLayout_clip_support_anim, false);
+            mScaleX = typedArray.getFloat(R.styleable.ClipLinearLayout_clip_sel_scaleX, 1.0f);
+            mScaleY = typedArray.getFloat(R.styleable.ClipLinearLayout_clip_sel_scaleY, 1.0f);
+            mDuration = typedArray.getInteger(R.styleable.ClipLinearLayout_clip_anim_duration, 100);
+            mClipSize = typedArray.getFloat(R.styleable.ClipLinearLayout_clip_size, 10);
             typedArray.recycle();
         }
     }
@@ -195,35 +197,41 @@ public class ClipLinearLayout extends LinearLayout {
         });
     }
 
-    /**
-     * 设置裁剪位置根据子ChildView的id
-     *
-     * @param view childView  必须设置id属性
-     */
-    public void clipCirCle(View view) {
-        //裁剪边缘距离（view的边缘到裁剪区域边缘之间的距离）
-        float clipBorder = 45;
-        clipRadius(view, clipBorder);
-    }
 
     /**
-     * 设置裁剪位置根据子ChildView的id
+     * 重绘背景色
      *
-     * @param view   childView  必须设置id属性
-     * @param radius 裁剪View的边缘到裁剪区域之间的距离 (单位像素px)
+     * @param backgroundColor 背景色
      */
-    public void clipCirCle(View view, int radius) {
-        clipRadius(view, radius);
+    @Override
+    public void setBackgroundColor(int backgroundColor) {
+        this.mRoundBackgroundColor = backgroundColor;
+        initPaint();
+        invalidate();
     }
 
 
     /**
-     * 裁剪半径
+     * 确定点进行重绘
+     *
+     * @param x      x
+     * @param y      y
+     * @param radius 实际半径
+     */
+    private void setCirCleCoordinate(float x, float y, float radius) {
+        mX = x;
+        mY = y;
+        mRadius = radius;
+        invalidate();
+    }
+
+    /**
+     * 裁剪圆
      *
      * @param view   裁剪的View
-     * @param radius 裁剪的半径（一般为view的宽度/2+像素才看得到裁剪效果），默认是45
+     * @param radius 选中view的边缘到裁剪边缘的距离
      */
-    private void clipRadius(View view, float radius) {
+    private void clipCirCle(View view, float radius) {
         if (mSparseArray.get(view.getId()) != null) {
             RectF rectF = mSparseArray.get(view.getId());
             if (rectF == null) {
@@ -231,5 +239,54 @@ public class ClipLinearLayout extends LinearLayout {
             }
             this.setCirCleCoordinate((rectF.right - rectF.left) / 2 + rectF.left, (rectF.bottom - rectF.top) / 2 + rectF.top, view.getWidth() / 2 + radius);
         }
+    }
+
+
+    /**
+     * 切换选中
+     *
+     * @param v view
+     */
+    private void switchToSel(View v) {
+        v.setSelected(true);
+        if (mOnClickClipListener != null) {
+            mOnClickClipListener.onCurrentView(v);
+        }
+        if (mSupportAnim) {
+            v.animate().scaleX(mScaleX).scaleY(mScaleY).setDuration(mDuration).start();
+        }
+    }
+
+
+    /**
+     * 切换默认
+     */
+    private void switchToDef() {
+        if (mPreView != null) {
+            mPreView.setSelected(false);
+            if (mOnClickClipListener != null) {
+                mOnClickClipListener.onPreviousView(mPreView);
+            }
+            if (mSupportAnim) {
+                mPreView.animate().scaleX(1.0f).scaleY(1.0f).start();
+            }
+        }
+    }
+
+
+    /**
+     * 裁剪选中的View
+     *
+     * @param view
+     */
+    public void clipSelectView(View view) {
+        //切换默认
+        switchToDef();
+        //切换选中
+        switchToSel(view);
+        //裁剪具体操作
+        clipCirCle(view, mClipSize);
+        //记住上一个操作的View
+        mPreView = view;
     }
 }

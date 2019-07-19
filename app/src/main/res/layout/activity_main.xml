@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@drawable/ic_launcher_background"
               android:clipChildren="false"
               android:clipToPadding="false"
-              android:paddingBottom="@dimen/dp_100"
-              android:gravity="center|bottom">
-
+              android:gravity="center|bottom"
+              android:paddingBottom="@dimen/dp_100">
 
 
     <!--layout_gravity属性和margin属性对Canvas绘制位置有影响，建议：放到父view操作这些-->
     <cn.app.cll.widget.ClipLinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/clipLayout"
         android:layout_width="@dimen/dp_222"
         android:layout_height="@dimen/dp_46"
-        app:round_background="@color/color_white"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:gravity="center">
+        android:gravity="center"
+        app:clip_anim_duration="100"
+        app:clip_round_background="@color/color_white"
+        app:clip_sel_scaleX="1.87"
+        app:clip_sel_scaleY="1.87"
+        app:clip_size="45"
+        app:clip_support_anim="true"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivThirtySecond"
