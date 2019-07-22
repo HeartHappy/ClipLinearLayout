@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.app.cll.widget.ClipLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clipLayout"
+    android:layout_width="@dimen/dp_222"
+    android:layout_height="@dimen/dp_46"
+    android:clipChildren="false"
+    android:gravity="center"
+    app:clip_anim_duration="100"
+    app:clip_round_background="@color/color_white"
+    app:clip_sel_scaleX="1.87"
+    app:clip_sel_scaleY="1.87"
+    app:clip_size="45"
+    app:clip_support_anim="true"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivThirtySecond"
+        style="@style/style_clip_circle"
+        android:background="@drawable/sel_thirty_second"
+        tools:ignore="ContentDescription"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivSixtySeconds"
+        style="@style/style_clip_circle"
+        android:background="@drawable/sel_sixty_seconds"
+        tools:ignore="ContentDescription"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivTrisection"
+        style="@style/style_clip_circle"
+        android:background="@drawable/sel_trisection"
+        tools:ignore="ContentDescription"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivFifth"
+        style="@style/style_clip_circle"
+        android:background="@drawable/sel_fifth"
+        tools:ignore="ContentDescription"/>
+</cn.app.cll.widget.ClipLinearLayout>

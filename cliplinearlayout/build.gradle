@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'//添加
+apply plugin: 'com.novoda.bintray-release'//添加，同下面publish内容一起删除
 android {
     compileSdkVersion 28
 
@@ -28,7 +28,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-//添加
+//添加（该部分为上传到JCenter库的代码，下载到本地时可删除，该部分构建时会报variantOutput.getPackageLibrary()错误，但是不影响AS编译）
 publish {
     userOrg = 'hearthappy'//bintray.com用户名
     groupId = 'com.hearthappy'//jcenter上的路径

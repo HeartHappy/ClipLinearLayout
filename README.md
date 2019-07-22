@@ -10,7 +10,9 @@
 (说明项目的配置方法，android开源库多用Gradle导入)
 ### Gradle 引入
 ```java
+
 compile 'com.hearthappy:cliplinearlayout:1.0.1'
+
 ```
 
 ## 使用方法
