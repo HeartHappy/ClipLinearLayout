@@ -55,7 +55,9 @@ public class ClipLinearLayout extends LinearLayout {
     public void setOnClickClipListener(OnClickClipListener onClickClipListener) {
         mOnClickClipListener = onClickClipListener;
     }
-
+    public View getPreView() {
+        return mPreView;
+    }
 
     public void builder(ClipLayoutAttrs attrs) {
         mSupportAnim = attrs.isSupportAnim();
