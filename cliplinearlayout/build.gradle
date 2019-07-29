@@ -28,13 +28,22 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
+
+
+def prop = new Properties()
+prop.load(file('../local.properties').newDataInputStream())
+
+
 //添加（该部分为上传到JCenter库的代码，下载到本地时可删除，该部分构建时会报variantOutput.getPackageLibrary()错误，但是不影响AS编译）
 publish {
     userOrg = 'hearthappy'//bintray.com用户名
     groupId = 'com.hearthappy'//jcenter上的路径
     artifactId = 'cliplinearlayout'//项目名称
-    publishVersion = '1.0.1'//版本号
+    publishVersion = '1.0.2'//版本号
     desc = 'Project maintenance updates'//描述，不重要
     website = 'https://github.com/HeartHappy/ClipLinearLayout'//网站，最好有，不重要
+    bintrayUser = prop.getProperty("bintray.user")//你的bintray的用户名
+    dryRun = false
+    bintrayKey = prop.getProperty("bintray.apikey")
 }
 

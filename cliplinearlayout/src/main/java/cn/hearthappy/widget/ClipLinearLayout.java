@@ -1,4 +1,4 @@
-package cn.app.cll.widget;
+package cn.hearthappy.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,17 +8,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import cn.app.cll.R;
-import cn.app.cll.builder.ClipLayoutAttrs;
-import cn.app.cll.interfaces.OnClickClipListener;
+import cn.hearthappy.cll.R;
+import cn.hearthappy.builder.ClipLayoutAttrs;
+import cn.hearthappy.interfaces.OnClickClipListener;
 
 
 /**

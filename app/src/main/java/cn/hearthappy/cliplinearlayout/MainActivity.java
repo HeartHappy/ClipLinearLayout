@@ -1,11 +1,11 @@
-package cn.app.cliplinearlayout;
+package cn.hearthappy.cliplinearlayout;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import cn.app.cll.interfaces.OnClickClipListener;
-import cn.app.cll.widget.ClipLinearLayout;
+import cn.hearthappy.interfaces.OnClickClipListener;
+import cn.hearthappy.widget.ClipLinearLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
