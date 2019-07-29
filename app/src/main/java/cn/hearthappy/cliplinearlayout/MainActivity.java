@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //返回当前View
             }
         });
+
+        mClipLayout.getPreView();
     }
 
 

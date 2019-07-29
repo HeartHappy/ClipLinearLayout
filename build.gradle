@@ -20,12 +20,9 @@ allprojects {
     }
 }
 
-tasks.withType(Javadoc){
-    options{
-        encoding "UTF-8"
-        charSet 'UTF-8'
-        links "http://docs.oracle.com/javase/7/docs/api"
-    }
+// 指定javadoc UTF-8格式
+task javadoc(type: Javadoc) {
+    options.encoding = "utf-8"
 }
 task clean(type: Delete) {
     delete rootProject.buildDir

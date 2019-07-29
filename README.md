@@ -11,7 +11,7 @@
 ### Gradle 引入
 ```java
 
-compile 'com.hearthappy:cliplinearlayout:1.0.1'
+compile 'com.hearthappy:cliplinearlayout:1.0.3'
 
 ```
 
@@ -67,6 +67,9 @@ clipLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.
 //设置父布局圆角矩形背景色	
 clipLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
+//获取上一个选中View
+clipLayout.getPreView();
+
 
 ```
 
@@ -83,6 +86,8 @@ clipLayout.setOnClickClipListener(new OnClickClipListener() {
         //返回当前View
     }
 });
+
+
 
 ```
 

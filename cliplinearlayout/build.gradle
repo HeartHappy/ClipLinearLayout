@@ -39,11 +39,11 @@ publish {
     userOrg = 'hearthappy'//bintray.com用户名
     groupId = 'com.hearthappy'//jcenter上的路径
     artifactId = 'cliplinearlayout'//项目名称
-    publishVersion = '1.0.2'//版本号
+    publishVersion = '1.0.3'//版本号
     desc = 'Project maintenance updates'//描述，不重要
     website = 'https://github.com/HeartHappy/ClipLinearLayout'//网站，最好有，不重要
     bintrayUser = prop.getProperty("bintray.user")//你的bintray的用户名
-    dryRun = false
     bintrayKey = prop.getProperty("bintray.apikey")
+    dryRun = false
 }
 
