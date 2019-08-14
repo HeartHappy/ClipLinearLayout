@@ -48,11 +48,13 @@ public class ClipLinearLayout extends LinearLayout {
     private float mScaleY;//缩放Y
     private long mDuration;//动画时长
     private float mClipSize;//裁剪大小，单位像素px
+    private boolean mIsClip = true;
 
 
     public void setOnClickClipListener(OnClickClipListener onClickClipListener) {
         mOnClickClipListener = onClickClipListener;
     }
+
     public View getPreView() {
         return mPreView;
     }
@@ -174,7 +176,12 @@ public class ClipLinearLayout extends LinearLayout {
         Path roundRectPath = new Path();
         roundRectPath.addRoundRect(new RectF(getPaddingLeft(), getPaddingTop(), mWidth - getPaddingRight(), mHeight - getPaddingBottom()), (float) mWidth / 2, (float) mWidth / 2, Path.Direction.CCW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            roundRectPath.op(circlePath, Path.Op.DIFFERENCE);
+            if (mIsClip) {
+                roundRectPath.op(circlePath, Path.Op.DIFFERENCE);
+            } else {
+                roundRectPath.op(circlePath, Path.Op.UNION);
+            }
+
         }
         canvas.drawPath(roundRectPath, mPaint);
     }
@@ -280,6 +287,23 @@ public class ClipLinearLayout extends LinearLayout {
      * @param view
      */
     public void clipSelectView(View view) {
+        //切换默认
+        switchToDef();
+        //切换选中
+        switchToSel(view);
+        //裁剪具体操作
+        clipCirCle(view, mClipSize);
+        //记住上一个操作的View
+        mPreView = view;
+    }
+
+    /**
+     * 选中的View不裁剪
+     *
+     * @param view
+     */
+    public void clipSelectView(View view, boolean isClip) {
+        mIsClip = isClip;
         //切换默认
         switchToDef();
         //切换选中

@@ -56,6 +56,9 @@ clipLayout.builder(attrs);
 //选中的View ，裁剪具体操作
 clipLayout.clipSelectView(v);//裁剪的子view（注：这里具体裁剪的是ClipLinearLayout，根据传递的子view位置进行裁剪）
 
+//选中的View ，不裁剪
+clipLayout.clipSelectView(v,false);
+
 //默认裁剪，View绘制完成监听，否则设置默认选中无效
 clipLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
     @Override

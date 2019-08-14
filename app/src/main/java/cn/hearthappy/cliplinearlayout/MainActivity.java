@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mClipLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mClipLayout.clipSelectView(mIvThirtySecond);
+                mClipLayout.clipSelectView(mIvThirtySecond,true);
             }
         });
 
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        mClipLayout.clipSelectView(v);
+        mClipLayout.clipSelectView(v,true);
     }
 
 
