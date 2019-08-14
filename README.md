@@ -11,7 +11,7 @@
 ### Gradle 引入
 ```java
 
-compile 'com.hearthappy:cliplinearlayout:1.0.3'
+implementation 'com.hearthappy:cliplinearlayout:1.0.4'
 
 ```
 
